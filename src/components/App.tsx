@@ -2,9 +2,10 @@ import * as th from '../utils/themes';
 import Formulario from './Formulario';
 import TodoListDisplay from './TodoListDisplay';
 import TodoStatusDisplay from './TodoStatusDisplay';
-import { Container } from './Container';
 import { TODO, DB_TODO } from '../utils/types';
 import { useState } from 'react';
+import GlobalStyles from '../utils/GlobalStyles';
+import { ThemeProvider } from 'styled-components';
 
 function App(){
   const [dynamicData, setDynamicData] = useState<DB_TODO>([]);
@@ -22,15 +23,15 @@ function App(){
   }
 
   return (
-    <Container {...th[theme]}>
+    <ThemeProvider theme={th[theme]}>
+      <>
+      <GlobalStyles/>
       <h1>Lorem Ipsum</h1>
       <Formulario onSubmitData={submitedDataHandler} />
       <TodoStatusDisplay data={dynamicData} n_of_done={done[1]}/>
-      <TodoListDisplay 
-        theme={th[theme]} data={dynamicData} 
-        setNewData={setDynamicData} setDone={setDone}
-      />
-    </Container>
+      <TodoListDisplay data={dynamicData} setNewData={setDynamicData} setDone={setDone}/>
+      </>
+    </ThemeProvider>
  )
 }
 

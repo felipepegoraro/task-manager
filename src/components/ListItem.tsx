@@ -1,18 +1,14 @@
 import styled from 'styled-components';
-import { TypeTheme } from '../utils/themes'
 import { formatDate } from '../utils/date';
 import { DB_TODO } from '../utils/types';
 
-type StyledListItemProps = {
-  theme: TypeTheme;
-  isDone: boolean;
-};
+interface StyledListItemProps { isdone: string };
 
 const StyledListItem = styled.ul<StyledListItemProps>`
   list-style: none;
   padding: 10px;
-  background-color: ${(props) => props.theme.background};
-  border: 1px solid ${(props) => props.theme.foreground};
+  background-color: ${({theme}) => theme.background};
+  border: 1px solid ${({theme}) => theme.foreground};
   border-radius: 5px;
   margin-bottom: 10px;
 
@@ -27,21 +23,21 @@ const StyledListItem = styled.ul<StyledListItemProps>`
   }
 
   li:nth-child(3) {
-    color: ${(props) => (props.isDone ? props.theme.green : props.theme.red)} !important;
+    color: ${({theme,isdone}) => (Boolean(isdone) ? theme.green : theme.red)} !important;
   }
 
   li:last-child {
-    color: ${props => props.theme.comment} !important;
+    color: ${({theme}) => theme.comment} !important;
     font-size: 0.9em;
   }
 `;
 
-type ListItemProps = DB_TODO[0] & { theme: TypeTheme };
+type ListItemProps = DB_TODO[0];
 
 const ListItem = (props: ListItemProps) => {
-  const {id, name, description, addedDate, status, theme} = {...props};
+  const {id, name, description, addedDate, status} = {...props};
   return (
-    <StyledListItem theme={theme} isDone={status}>
+    <StyledListItem isdone={status.toString()}>
       <li>{id}</li>
       <li>{name} ({formatDate(addedDate)})</li>
       <li>{status ? 'done' : 'todo'}</li>

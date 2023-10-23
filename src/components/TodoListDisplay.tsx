@@ -1,11 +1,9 @@
 import { DB_TODO, TsetStateFn } from '../utils/types';
 import { MdDone } from 'react-icons/md';
 import { AiOutlineClose } from 'react-icons/ai';
-import { TypeTheme } from '../utils/themes';
 import ListItem from '../components/ListItem';
 
 type Props = {
-  theme: TypeTheme;
   data: DB_TODO;
   setNewData: TsetStateFn<DB_TODO>;
   setDone: TsetStateFn<[number, number]>;
@@ -36,14 +34,16 @@ const TodoListDisplay = (props: Props) => {
       ) : (
         data.map((e: DB_TODO[0], i: number) => (
           <div style={{display: 'flex', gap: '5px'}} key={i}>
-            <ul><ListItem theme={props.theme} {...e}/></ul>
+            <ul><ListItem {...e}/></ul>
 
             <div style={{display: 'flex', gap: '5px', alignItems: 'center', flexDirection: 'row'}}>
-              <button id={e.id} onClick={handleDone} disabled={e.status}>
+              <button id={e.id} onClick={handleDone} disabled={e.status} 
+                title={!e.status ? "finish task" : "already done"}
+                style={{cursor: !e.status ? 'pointer' : 'default'}}>
                 <span><MdDone/></span>
               </button>
 
-              <button id={e.id} onClick={handleDelete}>
+              <button className={"bt"} id={e.id} onClick={handleDelete} title={"delete task"}>
                 <span><AiOutlineClose/></span>
               </button>
             </div>
