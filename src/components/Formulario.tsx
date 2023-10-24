@@ -1,5 +1,8 @@
 import {TEvent, TODOHandlerProps, TFormProps, TFormHandler, TODO, DIFFICULTY, IMPORTANCE} from '../utils/types';
 import {useState} from 'react';
+import Button from './styled/Button';
+import {StyledInput, StyledSelect, StyledTextArea} from './styled/StyledFormInputs';
+import {FormField} from './styled/FormField';
 
 const getInitialTodoState = (): TODO => {
   const currentDate = new Date();
@@ -49,65 +52,58 @@ const Formulario = (props: TFormProps) => {
 
   return (
     <form onSubmit={submitHandler}>
-      <div>
-          <label>Name</label>
-          <input type="text" value={userInput.name} required 
-              onChange={(e: TEvent) => inputHandler({
-                  key: 'name',
-                  value: e.target.value
-              })}
-          />
-      </div>
-      <div>
-          <label>Description</label>
-          <textarea value={userInput.description.toString()} required 
-              onChange={(e: TEvent) => inputHandler({
-                  key: 'description',
-                  value: e.target.value
-              })}
-          />
-      </div>
-      <div>
-          <label>Note</label>
-          <input type="text" value={userInput.note}  required
-              onChange={(e: TEvent) => inputHandler({
-                  key: 'note',
-                  value: e.target.value
-              })}
-          />
-      </div>
+      <FormField gap={'4px'}>
+        <StyledInput type="text" value={userInput.name} placeholder={'Name'} title={'name'} required 
+          onChange={(e: TEvent) => inputHandler({
+            key: 'name',
+            value: e.target.value
+          })}
+        />
+      </FormField>
 
-      <div>
-          <label>Difficulty</label>
-          <select value={userInput.difficulty} required
-              onChange={(e: TEvent) => inputHandler({
-                  key: 'difficulty',
-                  value: e.target.value as DIFFICULTY
-              })}
-          >
-              <option value={'EASY'}>Easy</option>
-              <option value={'MEDIUM'}>Medium</option>
-              <option value={'HARD'}>Hard</option>
-          </select>
-      </div>
+      <FormField gap={'4px'}>
+        <StyledInput type="text" value={userInput.note} placeholder={'Aditional Note'} title={'note'} required
+          onChange={(e: TEvent) => inputHandler({
+            key: 'note',
+            value: e.target.value
+          })}
+        />
+      </FormField>
 
-      <div>
-          <label>Importance</label>
-          <select value={userInput.importance} required 
-              onChange={(e: TEvent) => inputHandler({
-                  key: 'importance',
-                  value: e.target.value as IMPORTANCE
-              })}
-          >
-              <option value={'LOW'}>Low</option>
-              <option value={'MEDIUM'}>Medium</option>
-              <option value={'HIGH'}>High</option>
-          </select>
-      </div>
+      <FormField gap={'4px'}>
+        <StyledSelect value={userInput.difficulty} title={'difficulty'} required
+          onChange={(e: TEvent) => inputHandler({
+            key: 'difficulty',
+            value: e.target.value as DIFFICULTY
+          })}
+        >
+          <option value={'EASY'}>Easy</option>
+          <option value={'MEDIUM'}>Medium</option>
+          <option value={'HARD'}>Hard</option>
+        </StyledSelect>
+        <StyledSelect value={userInput.importance} title={'importance'} required 
+          onChange={(e: TEvent) => inputHandler({
+            key: 'importance',
+            value: e.target.value as IMPORTANCE
+          })}
+        >
+          <option value={'LOW'}>Low</option>
+          <option value={'MEDIUM'}>Medium</option>
+          <option value={'HIGH'}>High</option>
+        </StyledSelect>
+      </FormField>
 
-      <div>
-        <button type={"submit"}>submit</button>
-      </div>
+      <FormField gap={'4px'}>
+        <StyledTextArea value={userInput.description.toString()} title={'description'} placeholder={'Description'} required 
+          onChange={(e: TEvent) => inputHandler({
+            key: 'description',
+            value: e.target.value
+          })}
+        />
+      </FormField>
+      <FormField gap={'0px'}>
+        <Button type={"submit"}>submit</Button>
+      </FormField>
     </form> 
   )
 }

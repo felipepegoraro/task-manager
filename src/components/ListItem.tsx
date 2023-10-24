@@ -11,9 +11,12 @@ const StyledListItem = styled.ul<StyledListItemProps>`
   border: 1px solid ${({theme}) => theme.foreground};
   border-radius: 5px;
   margin-bottom: 10px;
+  width: 250px;
+  padding: 8px !important;
 
   li {
     margin-bottom: 5px;
+    word-wrap: break-word;
   }
 
   li:nth-child(1) {
@@ -23,7 +26,9 @@ const StyledListItem = styled.ul<StyledListItemProps>`
   }
 
   li:nth-child(3) {
-    color: ${({theme,isdone}) => (Boolean(isdone) ? theme.green : theme.red)} !important;
+    color: ${({theme,isdone}) => (isdone === "true" 
+      ? theme.green 
+      : theme.red)} !important;
   }
 
   li:last-child {
@@ -37,7 +42,7 @@ type ListItemProps = DB_TODO[0];
 const ListItem = (props: ListItemProps) => {
   const {id, name, description, addedDate, status} = {...props};
   return (
-    <StyledListItem isdone={status.toString()}>
+    <StyledListItem isdone={status ? "true" : "false"}>
       <li>{id}</li>
       <li>{name} ({formatDate(addedDate)})</li>
       <li>{status ? 'done' : 'todo'}</li>

@@ -2,6 +2,8 @@ import { DB_TODO, TsetStateFn } from '../utils/types';
 import { MdDone } from 'react-icons/md';
 import { AiOutlineClose } from 'react-icons/ai';
 import ListItem from '../components/ListItem';
+import Button from './styled/Button';
+import {Flex} from './styled/Flex';
 
 type Props = {
   data: DB_TODO;
@@ -28,29 +30,29 @@ const TodoListDisplay = (props: Props) => {
   };
 
   return (
-    <div>
+    <Flex gap={'4px'} justify={'flex-start'} align={'flex-start'} direction={'column'}>
       {data.length === 0 ? (
         <p>empty list</p>
       ) : (
         data.map((e: DB_TODO[0], i: number) => (
-          <div style={{display: 'flex', gap: '5px'}} key={i}>
+          <Flex gap={'4px'} justify={'flex-start'} align={'center'} direction={'row'} key={i}>
             <ul><ListItem {...e}/></ul>
 
-            <div style={{display: 'flex', gap: '5px', alignItems: 'center', flexDirection: 'row'}}>
-              <button id={e.id} onClick={handleDone} disabled={e.status} 
+            <Flex gap={'4px'} justify={'flex-start'} align={'center'} direction={'column'}>
+              <Button id={e.id} onClick={handleDone} disabled={e.status} 
                 title={!e.status ? "finish task" : "already done"}
                 style={{cursor: !e.status ? 'pointer' : 'default'}}>
                 <span><MdDone/></span>
-              </button>
+              </Button>
 
-              <button className={"bt"} id={e.id} onClick={handleDelete} title={"delete task"}>
+              <Button className={"bt"} id={e.id} onClick={handleDelete} title={"delete task"}>
                 <span><AiOutlineClose/></span>
-              </button>
-            </div>
-          </div>
+              </Button>
+            </Flex>
+          </Flex>
         ))
       )}
-    </div>
+    </Flex>
   );
 };
 
