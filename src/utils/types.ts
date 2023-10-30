@@ -37,6 +37,6 @@ export type TODOStatus = {
   n_of_done: number
 }
 
-export type TFormProps = {
-  onSubmitData: (enteredData: TODO) => void;
+export type TFormProps<T> = {
+  onSubmitData: (enteredData: T) => void;
 }

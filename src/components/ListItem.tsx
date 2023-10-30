@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { formatDate } from '../utils/date';
 import { DB_TODO } from '../utils/types';
 
-interface StyledListItemProps { isdone: string };
+type StyledListItemProps = { isdone: string };
 
 const StyledListItem = styled.ul<StyledListItemProps>`
   list-style: none;
@@ -41,10 +41,11 @@ type ListItemProps = DB_TODO[0];
 
 const ListItem = (props: ListItemProps) => {
   const {id, name, description, addedDate, status} = {...props};
+  const date = new Date(addedDate);
   return (
     <StyledListItem isdone={status ? "true" : "false"}>
       <li>{id}</li>
-      <li>{name} ({formatDate(addedDate)})</li>
+      <li>{name} ({formatDate(date as Date)})</li>
       <li>{status ? 'done' : 'todo'}</li>
       <li>{description}</li>
     </StyledListItem>

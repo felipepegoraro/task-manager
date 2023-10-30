@@ -1,8 +1,8 @@
-import {TEvent, TODOHandlerProps, TFormProps, TFormHandler, TODO, DIFFICULTY, IMPORTANCE} from '../utils/types';
+import {TEvent, TODOHandlerProps, TFormHandler, TODO, DIFFICULTY, IMPORTANCE} from '../utils/types';
 import {useState} from 'react';
-import Button from './styled/Button';
 import {StyledInput, StyledSelect, StyledTextArea} from './styled/StyledFormInputs';
 import {FormField} from './styled/FormField';
+import Button from './styled/Button';
 
 const getInitialTodoState = (): TODO => {
   const currentDate = new Date();
@@ -27,7 +27,12 @@ const getInitialTodoState = (): TODO => {
 
 const INITIAL_STATE: TODO = getInitialTodoState();
 
-const Formulario = (props: TFormProps) => {
+type FormularioProps = {
+  fn: (enteredData: TODO) => void;
+  children: React.ReactNode;
+}
+
+const Formulario = (props: FormularioProps) => {
   const [userInput, setUserInput] = useState<TODO>(INITIAL_STATE);
 
   const inputHandler = (input: TODOHandlerProps<string | number | Date | DIFFICULTY>) => {
@@ -46,7 +51,7 @@ const Formulario = (props: TFormProps) => {
 
   const submitHandler = (event: TFormHandler) => {
     event.preventDefault();
-    props.onSubmitData({...userInput})
+    props.fn({...userInput})
     setUserInput({...INITIAL_STATE})
   }
 
@@ -101,8 +106,10 @@ const Formulario = (props: TFormProps) => {
           })}
         />
       </FormField>
-      <FormField gap={'0px'}>
-        <Button type={"submit"}>submit</Button>
+
+      <FormField gap={'5px'}>
+          <Button type={"submit"}>submit</Button>
+          {props.children}
       </FormField>
     </form> 
   )

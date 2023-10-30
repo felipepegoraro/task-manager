@@ -7,12 +7,14 @@ import { useState } from 'react';
 import GlobalStyles from '../utils/GlobalStyles';
 import { ThemeProvider } from 'styled-components';
 import {Flex} from './styled/Flex';
+import { handleSerializeClick, handleDeserializeData } from '../utils/serialize';
+import Button from './styled/Button';
 
 function App(){
   const [dynamicData, setDynamicData] = useState<DB_TODO>([]);
   const [done, setDone] = useState<[number, number]>([0,0]);
 
-  const theme: th.Theme = 'custom_dark';
+  const theme: th.Theme = 'github_light';
 
   const submitedDataHandler = (enteredData: TODO) => {
     const data = {
@@ -31,7 +33,15 @@ function App(){
 
         <Flex direction={"column"} gap={'4px'} align={'center'} justify={'center'}>
           <h2>Add new task</h2>
-          <Formulario onSubmitData={submitedDataHandler} />
+          <Formulario fn={submitedDataHandler}>
+            <Button title={"import data from JSON file"} onClick={() => handleDeserializeData(setDynamicData)}>
+              import
+            </Button>
+            <Button title={"export data to JSON file"} onClick={()=> handleSerializeClick(dynamicData)}>
+              export
+            </Button> 
+          </Formulario>
+
         </Flex>
 
         <Flex direction={'column'} gap={'4px'} align={'flex-start'} justify={'flex-start'}>
